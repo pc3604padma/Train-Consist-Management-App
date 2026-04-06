@@ -1,33 +1,30 @@
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
-
 public class TrainConsistManagementApp {
+
     public static void main(String[] args) {
-        // 1. Create a HashSet to store unique bogie IDs
-        Set<String> bogieIds = new HashSet<>();
+        // Create a LinkedHashSet to represent the train formation
+        // LinkedHashSet maintains insertion order and enforces uniqueness
+        Set<String> trainFormation = new LinkedHashSet<>();
 
-        System.out.println("--- Adding Bogies to the System ---");
+        // 1. Attach bogies in order
+        trainFormation.add("Engine");
+        trainFormation.add("Sleeper");
+        trainFormation.add("Cargo");
+        trainFormation.add("Guard");
 
-        // 2. Add bogie IDs, including intentional duplicates
-        bogieIds.add("BG101");
-        bogieIds.add("BG102");
-        bogieIds.add("BG103");
+        // 2. Attempt to attach a duplicate bogie intentionally
+        // LinkedHashSet will automatically ignore this duplicate [cite: 1]
+        trainFormation.add("Sleeper");
 
-        // Attempting to add a duplicate ID
-        System.out.println("Attempting to add duplicate: BG101");
-        boolean isAdded = bogieIds.add("BG101");
+        // 3. Display the final train formation [cite: 1]
+        System.out.println("Final Train Formation (Order Preserved, No Duplicates):");
+        System.out.println(trainFormation);
 
-        if (!isAdded) {
-            System.out.println("Duplicate detected! BG101 was not added.");
+        // Detailed Iteration to show ordered sequence [cite: 1]
+        System.out.println("\nBogie Attachment Sequence:");
+        for (String bogie : trainFormation) {
+            System.out.println("- " + bogie);
         }
-
-        // 3. Print the final set of unique IDs
-        System.out.println("\nFinal List of Unique Bogie IDs:");
-        for (String id : bogieIds) {
-            System.out.println("Bogie ID: " + id);
-        }
-
-        // 4. Observe that duplicates are removed automatically
-        System.out.println("\nTotal Unique Bogies: " + bogieIds.size());
     }
 }
