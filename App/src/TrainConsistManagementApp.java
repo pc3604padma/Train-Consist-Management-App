@@ -1,17 +1,33 @@
-import java.util.ArrayList;
-import java.util.List;
-public class TrainConsistManagementApp {
-        public static void main(String[] args) {
-            // Display welcome banner
-            System.out.println("========================================");
-            System.out.println("=== Train Consist Management App ===");
-            System.out.println("========================================\n");
+import java.util.LinkedList;
 
-            // Create a dynamic list to store train bogies using ArrayList
-            List<String> trainConsist = new ArrayList<>();
+public class TrainConsistManager {
+    public static void main(String[] args) {
+        // 1. Create a LinkedList for the consist
+        LinkedList<String> consist = new LinkedList<>();
 
-            // Display initial consist information and bogie count
-            System.out.println("Train initialized successfully...");
-            System.out.println("Initial bogie count: " + trainConsist.size());
-        }
+        // 2. Add initial bogies to maintain physical sequence
+        consist.add("Engine");
+        consist.add("Sleeper");
+        consist.add("AC");
+        consist.add("Cargo");
+        consist.add("Guard");
+
+        System.out.println("Initial Train Consist: " + consist);
+
+        // 3. Insert a Pantry Car at position 2 (index 2)
+        // This demonstrates the efficiency of middle insertion in LinkedList
+        consist.add(2, "Pantry Car");
+        System.out.println("After adding Pantry Car: " + consist);
+
+        // 4. Remove the first and last bogie [cite: 1]
+        consist.removeFirst(); // Removes Engine
+        consist.removeLast();  // Removes Guard
+
+        // 5. Display the final ordered train consist [cite: 1]
+        System.out.println("Final Ordered Train Consist: " + consist);
+
+        // Final Output Check
+        System.out.println("\n--- Key Operations Performed ---");
+        System.out.println("Order preserved: " + consist);
     }
+}
