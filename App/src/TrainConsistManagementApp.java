@@ -1,37 +1,47 @@
-import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class TrainConsistManagement {
+public class TrainConsistManagementApp {
     public static void main(String[] args) {
-        // 1. User creates a list of bogies (Reuse existing Bogie objects)
-        List<Bogie> bogies = List.of(
-                new Bogie("Sleeper", 72),
-                new Bogie("AC Chair", 56),
-                new Bogie("First Class", 24)
-        );
+        Scanner scanner = new Scanner(System.in);
 
-        // 2. System converts the list into a stream
-        // 3. map() extracts capacity values
-        // 4. reduce() sums the capacities using Integer::sum
-        int totalSeatingCapacity = bogies.stream()
-                .map(b -> b.getCapacity()) // Extract capacity
-                .reduce(0, Integer::sum);  // Aggregate into total
+        // 1. Define Regex Patterns
+        // Train ID: Starts with 'TRN-' followed by exactly 4 digits
+        String trainIdRegex = "TRN-\\d{4}";
+        // Cargo Code: Starts with 'PET-' followed by exactly 2 uppercase letters
+        String cargoCodeRegex = "PET-[A-Z]{2}";
 
-        // 5. Total seating capacity is displayed
-        System.out.println("Total seating capacity of the train: " + totalSeatingCapacity);
-    }
-}
+        // 2. Compile patterns using the Pattern class
+        Pattern trainIdPattern = Pattern.compile(trainIdRegex);
+        Pattern cargoCodePattern = Pattern.compile(cargoCodeRegex);
 
-// Supporting Bogie class structure based on UC10 requirements
-class Bogie {
-    private String type;
-    private int capacity;
+        // 3. User Input
+        System.out.print("Enter Train ID (e.g., TRN-1234): ");
+        String trainIdInput = scanner.nextLine();
 
-    public Bogie(String type, int capacity) {
-        this.type = type;
-        this.capacity = capacity;
-    }
+        System.out.print("Enter Cargo Code (e.g., PET-AB): ");
+        String cargoCodeInput = scanner.nextLine();
 
-    public int getCapacity() {
-        return capacity;
+        // 4. Create Matcher objects and validate using matches()
+        Matcher trainIdMatcher = trainIdPattern.matcher(trainIdInput);
+        Matcher cargoCodeMatcher = cargoCodePattern.matcher(cargoCodeInput);
+
+        // 5. Output Validation Results
+        System.out.println("\n--- Validation Results ---");
+
+        if (trainIdMatcher.matches()) {
+            System.out.println("Train ID [" + trainIdInput + "] is VALID.");
+        } else {
+            System.out.println("Train ID [" + trainIdInput + "] is INVALID. (Expected format: TRN-XXXX)");
+        }
+
+        if (cargoCodeMatcher.matches()) {
+            System.out.println("Cargo Code [" + cargoCodeInput + "] is VALID.");
+        } else {
+            System.out.println("Cargo Code [" + cargoCodeInput + "] is INVALID. (Expected format: PET-XX)");
+        }
+
+        scanner.close();
     }
 }
