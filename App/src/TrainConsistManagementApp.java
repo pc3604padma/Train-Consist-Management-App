@@ -1,33 +1,33 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
 
-public class TrainConsistManagementApp {
+public class TrainConsistManager {
     public static void main(String[] args) {
-        // 1. Create a HashSet to store unique bogie IDs
-        Set<String> bogieIds = new HashSet<>();
+        // 1. Create a LinkedList for the consist
+        LinkedList<String> consist = new LinkedList<>();
 
-        System.out.println("--- Adding Bogies to the System ---");
+        // 2. Add initial bogies to maintain physical sequence
+        consist.add("Engine");
+        consist.add("Sleeper");
+        consist.add("AC");
+        consist.add("Cargo");
+        consist.add("Guard");
 
-        // 2. Add bogie IDs, including intentional duplicates
-        bogieIds.add("BG101");
-        bogieIds.add("BG102");
-        bogieIds.add("BG103");
+        System.out.println("Initial Train Consist: " + consist);
 
-        // Attempting to add a duplicate ID
-        System.out.println("Attempting to add duplicate: BG101");
-        boolean isAdded = bogieIds.add("BG101");
+        // 3. Insert a Pantry Car at position 2 (index 2)
+        // This demonstrates the efficiency of middle insertion in LinkedList
+        consist.add(2, "Pantry Car");
+        System.out.println("After adding Pantry Car: " + consist);
 
-        if (!isAdded) {
-            System.out.println("Duplicate detected! BG101 was not added.");
-        }
+        // 4. Remove the first and last bogie [cite: 1]
+        consist.removeFirst(); // Removes Engine
+        consist.removeLast();  // Removes Guard
 
-        // 3. Print the final set of unique IDs
-        System.out.println("\nFinal List of Unique Bogie IDs:");
-        for (String id : bogieIds) {
-            System.out.println("Bogie ID: " + id);
-        }
+        // 5. Display the final ordered train consist [cite: 1]
+        System.out.println("Final Ordered Train Consist: " + consist);
 
-        // 4. Observe that duplicates are removed automatically
-        System.out.println("\nTotal Unique Bogies: " + bogieIds.size());
+        // Final Output Check
+        System.out.println("\n--- Key Operations Performed ---");
+        System.out.println("Order preserved: " + consist);
     }
 }
